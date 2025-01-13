@@ -1,0 +1,15 @@
+<!-- FIXME replace with my package -->
+
+<launch>
+    <node
+        pkg="perception"
+        exec="keyboard_node"
+        name="keyboard_node"
+        output="screen" />
+
+    <node
+        pkg="control"
+        exec="motor_node"
+        name="motor_node"
+        output="screen" />
+</launch>
