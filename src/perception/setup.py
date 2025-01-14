@@ -20,9 +20,9 @@ setup(
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
-            'motor_node = perception.motor_node:main',
+            'motor_feedback_node = perception.motor_feedback_node:main',
             'keyboard_node = perception.keyboard_node:main',
-            # TODO add more nodes
+            'depth_camera_node = perception.depth_camera_node:main'
         ],
     },
 )

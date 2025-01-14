@@ -1,15 +1,21 @@
 <!-- FIXME replace with my package -->
 
 <launch>
+    <!-- 
+    Keyboard node need seperate terminal to track input key, therefore have to srart with
+    ros2 run perception keyboard_node
+    in a new terminal
+    
     <node
         pkg="perception"
         exec="keyboard_node"
-        name="keyboard_node"
-        output="screen" />
-
+        name="keyboard_node_perception"
+        output="screen">
+    </node> -->
     <node
         pkg="control"
         exec="motor_node"
-        name="motor_node"
-        output="screen" />
+        name="motor_node_control"
+        output="screen">
+    </node>
 </launch>

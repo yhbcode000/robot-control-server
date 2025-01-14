@@ -2,23 +2,25 @@ import rclpy
 from rclpy.node import Node
 from std_msgs.msg import String
 
-class MotorNode(Node):
-    def __init__(self):
-        super().__init__('motor_node')
-        self.get_logger().info('Motor node has been started.')
-        self.create_subscription(String, 'perception/keyboard_input', self.keyboard_callback, 10)
+class KeyboardSubscriber(Node):
 
-    def keyboard_callback(self, msg):
-        if msg.data == 'w':
-            print('+')
-        elif msg.data == 's':
-            print('-')
+    def __init__(self):
+        super().__init__('keyboard_subscriber')
+        self.subscription = self.create_subscription(
+            String,
+            'keyboard_input',
+            self.listener_callback,
+            10)
+        self.subscription  # prevent unused variable warning
+
+    def listener_callback(self, msg):
+        self.get_logger().info('Received: "%s"' % msg.data)
 
 def main(args=None):
     rclpy.init(args=args)
-    motor_node = MotorNode()
-    rclpy.spin(motor_node)
-    motor_node.destroy_node()
+    keyboard_subscriber = KeyboardSubscriber()
+    rclpy.spin(keyboard_subscriber)
+    keyboard_subscriber.destroy_node()
     rclpy.shutdown()
 
 if __name__ == '__main__':
