@@ -1,3 +1,5 @@
+# Robot
+
 all brains use multi-modal chat bot for understanding
 
 all brains subscribe to sensor datas
@@ -25,3 +27,19 @@ during the action:
   - sudo apt-get install libportaudio2
   - sudo apt-get install python3-pyaudio 
 
+
+```bash
+source setup_workspace.sh 
+ros2 run perception text_input_node
+ros2 run perception central_brain_node
+ros2 run perception mini_brain_node
+ros2 run perception motor_node
+ros2 run perception 
+ros2 run perception 
+ros2 run perception 
+ros2 run perception 
+ros2 run perception 
+
+# TODO don't forget to complete our launch file in the robot pkg
+
+```
