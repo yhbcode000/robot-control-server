@@ -21,6 +21,7 @@ setup(
     entry_points={
         'console_scripts': [
             'central_brain_node = planning.central_brain_node:main',
+            'mini_brain_node = planning.mini_brain_node:main',
             # TODO add more nodes
         ],
     },

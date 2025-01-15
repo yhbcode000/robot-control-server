@@ -5,7 +5,7 @@
 rm -rf build install log
 
 # Build the workspace
-colcon build
+colcon build --cmake-args -DPython3_FIND_VIRTUALENV="ONLY"
 
 # Source the workspace
 source install/setup.bash

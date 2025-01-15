@@ -22,7 +22,9 @@ setup(
         'console_scripts': [
             'motor_feedback_node = perception.motor_feedback_node:main',
             'keyboard_node = perception.keyboard_node:main',
-            'depth_camera_node = perception.depth_camera_node:main'
+            'depth_camera_node = perception.depth_camera_node:main',
+            'microphone_node = perception.microphone_node:main',
+            'text_input_node = perception.text_input_node:main'
         ],
     },
 )

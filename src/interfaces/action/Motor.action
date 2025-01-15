@@ -1,0 +1,8 @@
+float64 motor_1_force
+float64 motor_2_force
+float64 motor_3_force
+---
+bool success
+---
+float64 current_position
+

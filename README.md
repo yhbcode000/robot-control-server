@@ -17,4 +17,11 @@ during the action:
     decide if we have to stop when the simulator result message is bad
         do in-context learning while continue moving, formulate new combination of actions with simulation service
 
+- Could not import 'rosidl_typesupport_c' for package 'interfaces'
+  - Cmake python different one, therefore a problem due to venv: https://github.com/ros2/examples/issues/303#issuecomment-2221348998
+  - https://robotics.stackexchange.com/questions/105587/ros2-on-windows-10-colcon-build-uses-wrong-python-version-no-module-named
+
+- sound device
+  - sudo apt-get install libportaudio2
+  - sudo apt-get install python3-pyaudio 
 
