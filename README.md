@@ -27,19 +27,12 @@ during the action:
   - sudo apt-get install libportaudio2
   - sudo apt-get install python3-pyaudio 
 
-
+- How to setup venv python for ros2
+  - https://medium.com/ros2-tips-and-tricks/running-ros2-nodes-in-a-python-virtual-environment-b31c1b863cdb
 ```bash
 source setup_workspace.sh 
-ros2 run perception text_input_node
-ros2 run perception central_brain_node
-ros2 run perception mini_brain_node
-ros2 run perception motor_node
-ros2 run perception 
-ros2 run perception 
-ros2 run perception 
-ros2 run perception 
-ros2 run perception 
 
 # TODO don't forget to complete our launch file in the robot pkg
 
 ```
+

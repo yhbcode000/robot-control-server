@@ -1,6 +1,6 @@
 from setuptools import find_packages, setup
 
-package_name = 'control'
+package_name = 'plan'
 
 setup(
     name=package_name,
@@ -20,7 +20,10 @@ setup(
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
-            'motor_node = control.motor_node:main'
+            # 'central_brain_node = plan.central_brain_node:main',
+            'dummy_central_brain_node = plan.dummy_central_brain_node:main',
+            'mini_brain_node = plan.mini_brain_node:main',
+            # TODO add more nodes
         ],
     },
 )

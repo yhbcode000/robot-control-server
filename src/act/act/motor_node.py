@@ -40,13 +40,7 @@ class MotorActionServer(Node):
 
         self.get_logger().info(f'Motor forces received: motor_1_force={motor_1_force}, motor_2_force={motor_2_force}, motor_3_force={motor_3_force}')
 
-        # Simulate some processing time
-        for _ in range(3):
-            feedback_msg.current_position += (motor_1_force + motor_2_force + motor_3_force) * 0.1
-            goal_handle.publish_feedback(feedback_msg)
-            self.get_logger().info(f'Current position: {feedback_msg.current_position}')
-            self.get_logger().info(f'Sleeping for {1} seconds...')
-            time.sleep(1)
+        # TODO impliment motor force application and position update
 
         goal_handle.succeed()
 

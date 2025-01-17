@@ -6,11 +6,17 @@ readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
     "catkin-pkg>=1.0.0",
+    "dm-control>=1.0.27",
     "empy>=4.2",
+    "glob2>=0.7",
     "lark>=1.2.2",
+    "mujoco>=3.2.7",
     "numpy>=2.2.1",
     "openai>=1.59.7",
+    "pip>=24.3.1",
     "pynput>=1.7.7",
     "pytest>=8.3.4",
+    "pyyaml>=6.0.2",
     "sounddevice>=0.5.1",
+    "webrtcvad>=2.0.10",
 ]

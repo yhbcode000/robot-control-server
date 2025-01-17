@@ -1,6 +1,6 @@
 from setuptools import find_packages, setup
 
-package_name = 'perception'
+package_name = 'sense'
 
 setup(
     name=package_name,
@@ -20,11 +20,11 @@ setup(
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
-            'motor_feedback_node = perception.motor_feedback_node:main',
-            'keyboard_node = perception.keyboard_node:main',
-            'depth_camera_node = perception.depth_camera_node:main',
-            'microphone_node = perception.microphone_node:main',
-            'text_input_node = perception.text_input_node:main'
+            # 'motor_feedback_node = sense.motor_feedback_node:main',
+            'keyboard_node = sense.keyboard_node:main',
+            # 'depth_camera_node = sense.depth_camera_node:main',
+            'microphone_node = sense.microphone_node:main',
+            'text_input_node = sense.text_input_node:main'
         ],
     },
 )
