@@ -2,7 +2,7 @@ from setuptools import find_packages, setup
 import os
 from glob import glob
 
-package_name = 'simulation'
+package_name = 'sim'
 
 setup(
     name=package_name,
@@ -23,7 +23,7 @@ setup(
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
-            'mujoco_node = simulation.mujoco_node:main'
+            'mujoco_node = sim.mujoco_node:main'
         ],
     },
 )

@@ -4,16 +4,6 @@ from rclpy.action import ActionClient
 from std_msgs.msg import String
 from interfaces.action import Motor
 
-command_map = {
-    "forward": "w",
-    "back": "s",
-    "left": "a",
-    "right": "d",
-    "stop": "x",
-    "clockwise spin": "q",
-    "anticlockwise spin": "e",
-}
-
 class MiniBrainNode(Node):
     def __init__(self):
         super().__init__('mini_brain_node')
@@ -29,23 +19,20 @@ class MiniBrainNode(Node):
         self.timer = self.create_timer(0.2, self.spin_timer_callback)
 
     def cmd_callback(self, msg):
-        incoming_cmd = msg.data.strip().lower()
-        cmd = command_map.get(incoming_cmd, incoming_cmd)
-        self.get_logger().info(f'Received: {incoming_cmd} -> {cmd}')
+        incoming_cmd = msg.data.strip()
+        self.get_logger().info(f'Received: {incoming_cmd}')
 
-        if cmd == 'w':
-            self.send_motor_goal(1.0, 1.0, 1.0, 'Forward')
-        elif cmd == 's':
-            self.send_motor_goal(0.0, 0.0, 0.0, 'Stop')
-        elif cmd == 'a':
-            self.send_motor_goal(0.5, 1.0, 0.5, 'Left turn')
-        elif cmd == 'd':
-            self.send_motor_goal(1.0, 0.5, 1.0, 'Right turn')
-        elif cmd == 'x':
+        if incoming_cmd == 'D1':
+            self.send_motor_goal(1.0, 0.0, 0.0, 'Increase dimension 1')
+        elif incoming_cmd == 'D2':
+            self.send_motor_goal(0.0, 1.0, 0.0, 'Increase dimension 2')
+        elif incoming_cmd == 'D3':
+            self.send_motor_goal(0.0, 0.0, 1.0, 'Increase dimension 3')
+        elif incoming_cmd == 'X':
             self.send_motor_goal(0.0, 0.0, 0.0, 'Emergency stop')
-        elif cmd == 'q':
+        elif incoming_cmd == 'CS':
             self.start_spin('clockwise')
-        elif cmd == 'e':
+        elif incoming_cmd == 'AS':
             self.start_spin('anticlockwise')
 
     def start_spin(self, direction):

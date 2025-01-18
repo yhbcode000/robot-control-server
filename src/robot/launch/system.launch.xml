@@ -11,11 +11,42 @@
         exec="keyboard_node"
         name="keyboard_node_perception"
         output="screen">
-    </node> -->
+    </node> 
     <node
-        pkg="control"
+        pkg="perception"
+        exec="microphone_node"
+        name="microphone_node_perception"
+        output="screen">
+    </node>
+    -->
+    <node
+        pkg="plan"
+        exec="central_brain_node"
+        name="central_brain_node_plan"
+        output="screen">
+    </node>
+    <node
+        pkg="plan"
+        exec="mini_brain_node"
+        name="mini_brain_node_plan"
+        output="screen">
+    </node>
+    <node
+        pkg="act"
         exec="motor_node"
-        name="motor_node_control"
+        name="motor_node_act"
+        output="screen">
+    </node>
+    <node
+        pkg="act"
+        exec="speaker_node"
+        name="speaker_node_act"
+        output="screen">
+    </node>
+    <node
+        pkg="sim"
+        exec="mujoco_node"
+        name="mujoco_node_sim"
         output="screen">
     </node>
 </launch>

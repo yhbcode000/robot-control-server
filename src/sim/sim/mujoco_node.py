@@ -48,7 +48,7 @@ class MotorController(Node):
 
 def main(args=None):
     rclpy.init(args=args)
-    resource_path = os.path.join(get_package_share_directory('simulation'), 'resource')
+    resource_path = os.path.join(get_package_share_directory('sim'), 'resource')
     model_path = os.path.join(resource_path, 'physics_model', 'spiral_3D.xml')
     node = MotorController(model_path)
     rclpy.spin(node)

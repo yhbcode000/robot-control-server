@@ -13,9 +13,10 @@
   <test_depend>ament_lint_common</test_depend>
 
   <!-- FIXME replace with my package-->
-  <exec_depend>perception</exec_depend>
-  <exec_depend>control</exec_depend>
-
+  <exec_depend>plan</exec_depend>
+  <exec_depend>act</exec_depend>
+  <exec_depend>sim</exec_depend>
+  
   <export>
     <build_type>ament_cmake</build_type>
   </export>
