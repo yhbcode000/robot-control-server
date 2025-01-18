@@ -19,12 +19,30 @@ class CentralBrainNode(Node):
 
         # Create an Assistant that has one "publish_cmd" function tool
         # The cmd argument is an enum we can expand over time.
+        # TODO add time series data to the action sequence define. HMM-time depend. 
+        # a action x b action not transitive. therefore we need to practice in the simulation. 
+        # 1. basic comnbination of actions, from chatgpt imagination and understanding of the action description. D2, D3
+        # 2. add time-duration as one variable of each action. D2_0.3, D3_0.5
+        # 3. add simulation correction to the action sequence, due to current caos soft structure, like resnet. D2_0.3 + D2_0.1_simulation --KF--> D2_0.2
+        # 3.qa1. use ml/world model for the robot to get the correction, use the simulator to train it.
+        # 3.1. use ML in simulation to find best time-duration and **combination of actions**.
+        # 3.qa2. if we go to 4 without 3 how we can get a reliable combination of actions? we need to close to loop of chatgpt action sequence design.
+        # 3.delta. digital-twin, sim-real.
+        # 4. action description embeding learning, use abstract words to describe or associte with the action.
+        # 1. 2. 3.qa2. 4. first, if not good enough, go to 3.
+        #
+        # note: 
+        # motor_feedback + speech(text) (pending. + visual(function calling)) 
+        # -> 4. (context embeding -> search action_sequence -> action sequence gaussian blur (both order and variable))
+        # -> 3.qa2. (chatgpt further tune action_sequence -> simulator -> alert (or 3. use ML get action correction term) -> try again or exe action_sequence)
+        #
+        # after complete 1. 2. and pr/draft, we can decide which one to go next and how to split work.
         self.assistant = self.client.beta.assistants.create(
             name="CentralBrainAssistant",
             instructions=(
                 "You are a central brain for a robot. "
                 "When the user asks to move or spin, use the 'publish_cmd' function with the correct enum. "
-                "Enums:\n"
+                "Action List:\n" 
                 " - D1: Move forward or direction 1\n"
                 " - D2: Move forward or direction 2\n"
                 " - D3: Move forward or direction 3\n"

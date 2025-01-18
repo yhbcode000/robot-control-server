@@ -22,6 +22,7 @@ class MiniBrainNode(Node):
         incoming_cmd = msg.data.strip()
         self.get_logger().info(f'Received: {incoming_cmd}')
 
+        # TODO MPC-like logic here, might be a separate idea here.
         if incoming_cmd == 'D1':
             self.send_motor_goal(1.0, 0.0, 0.0, 'Increase dimension 1')
         elif incoming_cmd == 'D2':
