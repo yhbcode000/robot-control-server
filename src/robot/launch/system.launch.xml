@@ -1,5 +1,3 @@
-<!-- FIXME replace with my package -->
-
 <launch>
     <!-- 
     Keyboard node need seperate terminal to track input key, therefore have to srart with

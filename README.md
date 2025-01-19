@@ -29,15 +29,11 @@ during the action:
 
 - How to setup venv python for ros2
   - https://medium.com/ros2-tips-and-tricks/running-ros2-nodes-in-a-python-virtual-environment-b31c1b863cdb
+
+
 ```bash
 source setup_workspace.sh 
-
-ros2 run sense text_input_node
-ros2 run plan dummy_central_brain_node
-ros2 run plan mini_brain_node 
-ros2 run act motor_node 
-ros2 run simulation mujoco_node 
-# TODO don't forget to complete our launch file in the robot pkg
-
+ros2 launch robot system.launch.xml
+ros2 run sense microphone_node
 ```
 

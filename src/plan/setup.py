@@ -23,7 +23,6 @@ setup(
             'central_brain_node = plan.central_brain_node:main',
             'dummy_central_brain_node = plan.dummy_central_brain_node:main',
             'mini_brain_node = plan.mini_brain_node:main',
-            # TODO add more nodes
         ],
     },
 )
