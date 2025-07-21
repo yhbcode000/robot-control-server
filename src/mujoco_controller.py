@@ -7,7 +7,7 @@ from typing import Any, Dict, List, Optional
 import numpy as np
 from mujoco import MjData, MjModel, mj_step, viewer
 
-from src.schemas import MotorCommand, RobotMode, RobotStatus
+from src.schemas import RobotMode, RobotStatus
 
 
 class MuJoCoController:
@@ -34,8 +34,10 @@ class MuJoCoController:
 
             print(f"Loading MuJoCo model from: {self.model_path}")
             self.model = MjModel.from_xml_path(self.model_path)
-            print(f"Model loaded successfully: {self.model.nbody} bodies, {self.model.nu} actuators")
-            
+            print(
+                f"Model loaded successfully: {self.model.nbody} bodies, {self.model.nu} actuators"
+            )
+
             self.data = MjData(self.model)
             print("MuJoCo data structure initialized")
 
@@ -43,7 +45,9 @@ class MuJoCoController:
             if self.enable_viewer:
                 try:
                     self.viewer_handle = viewer.launch_passive(self.model, self.data)
-                    print(f"MuJoCo simulation initialized with viewer: {self.model_path}")
+                    print(
+                        f"MuJoCo simulation initialized with viewer: {self.model_path}"
+                    )
                 except Exception as viewer_error:
                     print(f"Warning: Failed to create viewer: {viewer_error}")
                     print("Continuing without viewer...")
@@ -55,6 +59,7 @@ class MuJoCoController:
             print(f"Failed to initialize MuJoCo simulation: {e}")
             print(f"Error type: {type(e).__name__}")
             import traceback
+
             traceback.print_exc()
             raise
 
@@ -98,23 +103,30 @@ class MuJoCoController:
 
             # time.sleep(0.01)  # 100 Hz simulation
 
-    def send_motor_command(self, command: MotorCommand) -> bool:
-        """Send motor command to simulation"""
+    def send_force_command(self, forces: List[float]) -> bool:
+        """Send force command to simulation"""
         try:
+            # Validate forces
+            if len(forces) < 3:
+                forces.extend([0.0] * (3 - len(forces)))
+
+            for i, force in enumerate(forces[:3]):
+                if not -10.0 <= force <= 10.0:
+                    print(f"❌ Force {force} out of range [-10.0, 10.0]")
+                    return False
+
             with self.lock:
                 # Check if forces actually changed
                 old_forces = self.motor_commands.copy()
-                self.motor_commands[0] = command.motor_1_force
-                self.motor_commands[1] = command.motor_2_force
-                self.motor_commands[2] = command.motor_3_force
-                
+                self.motor_commands = forces[:3]
+
                 # Only print if forces changed
                 if old_forces != self.motor_commands:
-                    print(f"🎛️  Motor update: {command.to_dict()}")
+                    print(f"🎛️  Force update: {self.motor_commands}")
 
             return True
         except Exception as e:
-            print(f"Failed to send motor command: {e}")
+            print(f"Failed to send force command: {e}")
             return False
 
     def get_status(self) -> RobotStatus:
@@ -147,21 +159,38 @@ def get_realtime_key():
     """Get a single keypress without waiting for Enter"""
     try:
         import msvcrt
+
         if msvcrt.kbhit():
-            key = msvcrt.getch().decode('utf-8').lower()
+            key = msvcrt.getch().decode("utf-8").lower()
             return key
         return None
     except ImportError:
         try:
             import keyboard
+
             # Check for various key presses
             key_mappings = {
-                'q': 'q', 'a': 'a', 'w': 'w', 's': 's', 'e': 'e', 'd': 'd',
-                'r': 'r', 'space': ' ', 't': 't', 'h': 'h', 'x': 'x',
-                'c': 'c', 'p': 'p', 'f': 'f', 'i': 'i',
-                '1': '1', '2': '2', '3': '3', 'esc': 'esc'
+                "q": "q",
+                "a": "a",
+                "w": "w",
+                "s": "s",
+                "e": "e",
+                "d": "d",
+                "r": "r",
+                "space": " ",
+                "t": "t",
+                "h": "h",
+                "x": "x",
+                "c": "c",
+                "p": "p",
+                "f": "f",
+                "i": "i",
+                "1": "1",
+                "2": "2",
+                "3": "3",
+                "esc": "esc",
             }
-            
+
             for kb_key, return_key in key_mappings.items():
                 if keyboard.is_pressed(kb_key):
                     return return_key
@@ -200,7 +229,7 @@ def status_display_thread(
     last_position = None
     last_connection = None
     last_running = None
-    
+
     print("📊 Status monitor started - will show updates only when values change")
 
     while not stop_event.is_set():
@@ -208,37 +237,45 @@ def status_display_thread(
             try:
                 status = controller.get_status()
                 current_time = time.strftime("%H:%M:%S")
-                
+
                 # Check if anything significant changed
                 forces_changed = last_forces != status.motor_forces
-                position_changed = (last_position is None or 
-                                  any(abs(status.current_position[i] - last_position[i]) > 0.001 
-                                      for i in range(len(status.current_position))))
+                position_changed = last_position is None or any(
+                    abs(status.current_position[i] - last_position[i]) > 0.001
+                    for i in range(len(status.current_position))
+                )
                 connection_changed = last_connection != status.is_connected
                 running_changed = last_running != controller.is_running
-                
+
                 # Only print if something changed
-                if (forces_changed or position_changed or connection_changed or 
-                    running_changed or last_status is None):
-                    
+                if (
+                    forces_changed
+                    or position_changed
+                    or connection_changed
+                    or running_changed
+                    or last_status is None
+                ):
+
                     print(f"\n🔄 Status Update [{current_time}]:")
-                    
+
                     # Connection status (only if changed)
                     if connection_changed or last_status is None:
                         connection_icon = "🟢" if status.is_connected else "🔴"
                         conn_text = "ACTIVE" if status.is_connected else "DISCONNECTED"
                         print(f"📡 Connection: {connection_icon} {conn_text}")
-                    
+
                     # Running status (only if changed)
                     if running_changed or last_status is None:
                         running_text = "RUNNING" if controller.is_running else "STOPPED"
                         print(f"🏃 Simulation: {running_text}")
-                    
+
                     # Position (only if changed significantly)
                     if position_changed or last_status is None:
                         pos = status.current_position
-                        print(f"📍 Position: [{pos[0]:8.4f}, {pos[1]:8.4f}, {pos[2]:8.4f}]")
-                    
+                        print(
+                            f"📍 Position: [{pos[0]:8.4f}, {pos[1]:8.4f}, {pos[2]:8.4f}]"
+                        )
+
                     # Motor forces (only if changed)
                     if forces_changed or last_status is None:
                         print("⚡ Motor Forces:")
@@ -247,9 +284,9 @@ def status_display_thread(
                             bar = "█" * min(bar_length, 20)
                             direction = "→" if force >= 0 else "←"
                             print(f"   Motor {i+1}: {force:6.2f} N {direction} {bar}")
-                    
+
                     print("-" * 50)
-                
+
                 # Update last values
                 last_status = status
                 last_forces = status.motor_forces.copy()
@@ -369,7 +406,9 @@ def main():
         initial_status = controller.get_status()
         if not initial_status.is_connected:
             print("❌ Failed to connect to simulation")
-            print(f"Debug info - Model: {controller.model is not None}, Data: {controller.data is not None}")
+            print(
+                f"Debug info - Model: {controller.model is not None}, Data: {controller.data is not None}"
+            )
             return
 
         print("✅ Controller initialized successfully")
@@ -412,7 +451,9 @@ def main():
         if test_key == "fallback":
             realtime_input = False
             print("⚠️  Real-time input not available, using fallback mode")
-            print("💡 Install 'keyboard' package for better experience: pip install keyboard")
+            print(
+                "💡 Install 'keyboard' package for better experience: pip install keyboard"
+            )
 
         print(f"🎯 Initial forces: {current_forces}")
         print(f"🎮 Status display: ON | Selected motor: {selected_motor + 1}")
@@ -442,7 +483,7 @@ def main():
                 # Get keyboard input
                 key = None
                 current_time = time.time()
-                
+
                 if realtime_input:
                     # Real-time input mode
                     key = get_realtime_key()
@@ -559,12 +600,7 @@ def main():
 
                 # Send motor command with error checking
                 try:
-                    command = MotorCommand(
-                        motor_1_force=current_forces[0],
-                        motor_2_force=current_forces[1],
-                        motor_3_force=current_forces[2],
-                    )
-                    success = controller.send_motor_command(command)
+                    success = controller.send_force_command(current_forces)
 
                     if success:
                         # Get updated status to confirm command was applied
