@@ -1,0 +1,424 @@
+<mujoco model="tentacle">
+	<compiler angle="radian" />
+	<option gravity="0 0 0"/>
+	<default>
+
+        
+        
+        <default class="freej">
+            <joint type="free" damping="0" armature="0" limited="false"/>
+        </default>     
+    </default>
+
+    <asset>
+		<mesh name="1" file="meshes\3d.STL" />
+		<mesh name="2" file="meshes\3d.STL" scale="0.9205 0.9205 0.9205"/>
+		<mesh name="3" file="meshes\3d.STL" scale="0.8547    0.8547    0.8547"/>
+		<mesh name="4" file="meshes\3d.STL" scale="0.7901    0.7901    0.7901"/>
+		<mesh name="5" file="meshes\3d.STL" scale="0.7305    0.7305    0.7305"/>
+		<mesh name="6" file="meshes\3d.STL" scale="0.6753    0.6753    0.6753"/>
+		<mesh name="7" file="meshes\3d.STL" scale="0.6243    0.6243    0.6243"/>
+		<mesh name="8" file="meshes\3d.STL" scale="0.5771    0.5771    0.5771"/>
+		<mesh name="9" file="meshes\3d.STL" scale="0.5335    0.5335    0.5335"/>
+		<mesh name="10" file="meshes\3d.STL" scale="0.4932    0.4932    0.4932"/>
+		<mesh name="11" file="meshes\3d.STL" scale="0.4216    0.4216    0.4216"/>
+		<mesh name="12" file="meshes\3d.STL" scale="0.3897    0.3897    0.3897"/>
+		<mesh name="13" file="meshes\3d.STL" scale="0.3603    0.3603    0.3603"/>
+		<mesh name="14" file="meshes\3d.STL" scale="0.3331    0.3331    0.3331"/>
+		<mesh name="15" file="meshes\3d.STL" scale="0.3079    0.3079    0.3079"/>
+		<mesh name="16" file="meshes\3d.STL" scale="0.2847    0.2847    0.2847"/>
+		<mesh name="17" file="meshes\3d.STL" scale="0.2632    0.2632    0.2632"/>
+		<mesh name="18" file="meshes\3d.STL" scale="0.2433    0.2433    0.2433"/>
+		<mesh name="19" file="meshes\3d.STL" scale="0.2249    0.2249    0.2249"/>
+		<mesh name="20" file="meshes\3d.STL" scale="0.2079    0.2079    0.2079"/>
+		
+        
+		<texture name="texplane" type="2d" builtin="checker" rgb1=".2 .3 .4" rgb2=".1 0.15 0.2"
+            width="512" height="512" mark="cross" markrgb=".8 .8 .8"/>
+		<texture type="skybox" builtin="gradient" rgb1="0.3 0.5 0.7" rgb2="0 0 0" width="512" height="3072" />
+		<material name="matplane" reflectance="0.3" texture="texplane" texrepeat="1 1" texuniform="true"/>
+    </asset>
+	
+	
+    <actuator>
+        <muscle name="A_1" ctrllimited="true"  lengthrange="0.05  0.4" ctrlrange="0  1" force="100" tendon="t1"/>
+		<muscle name="A_2" ctrllimited="true"  lengthrange="0.05  0.4" ctrlrange="0  1" force="100" tendon="t2"/>
+		<muscle name="A_3" ctrllimited="true"  lengthrange="0.05  0.4" ctrlrange="0  1" force="100" tendon="t3"/>
+    </actuator>
+    
+    <worldbody>		
+		<geom name="ground" type="plane" size="10 10 1" pos="0 0 0" quat="1 0 0 0" material="matplane" condim="1"/>
+		<light pos="1 0.5 0.7" dir="-1 0.5 -1" directional="true" castshadow="false" diffuse="0.4 0.4 0.4" specular="0.1 0.1 0.1" />
+		<body name="mocapt" mocap="true" pos="0 0 0.5">
+			<geom type="box" group="1" size="0.001 0.005 0.005" contype="0" conaffinity="0" rgba=".5 .5 .5 1"/>
+		</body>
+
+		
+		<body name="P1" pos="0 0 0.5" euler="0 -1.57 0">
+			<joint class="freej"/>
+			<geom type="mesh" mesh="1" name="1" pos="0 0 0" euler="0 0 0" rgba="0.4 0.9 0.4 1"/>
+			<inertial pos="0.011 0 0" quat="1 0 0 0" mass="0.01" diaginertia="0.000083 0.000083 0.00005" />
+			<site name="s1_01" pos="0.007 -0.015 0" size="0.001 0.001 0.001"/>
+			<site name="s1_02" pos="0.007 0.0075 0.013" size="0.001 0.001 0.001"/>
+			<site name="s1_03" pos="0.007 0.0075 -0.013" size="0.001 0.001 0.001"/>
+			<site name="s1_04" pos="0.02 -0.0145 0" size="0.001 0.001 0.001"/>
+			<site name="s1_05" pos="0.02 0.0074 0.0125" size="0.001 0.001 0.001"/>
+			<site name="s1_06" pos="0.02 0.0074 -0.0125" size="0.001 0.001 0.001"/>
+			
+			<body name="P2" pos="0.022 0 0">
+				<joint name="J2" pos="0 0 0" axis="1 0 0" type="ball"   stiffness="0.462" damping="0.02"  />
+				<geom type="mesh" mesh="2" name="2" pos="0 0 0" euler="0 0 0" rgba="0.4 0.9 0.4 1"/>
+				<inertial pos="0.0102 0 0" quat="1 0 0 0" mass="0.009205" diaginertia="0.000083 0.000083 0.00005" />
+				<site name="s2_01" pos="0.0064516   -0.013825           0" size="0.00092166  0.00092166  0.00092166"/>
+     <site name="s2_02" pos="0.0064516   0.0069124    0.011982" size="0.00092166  0.00092166  0.00092166"/>
+     <site name="s2_03" pos="0.0064516   0.0069124   -0.011982" size="0.00092166  0.00092166  0.00092166"/>
+     <site name="s2_04" pos="0.018433   -0.013364           0" size="0.00092166  0.00092166  0.00092166"/>
+     <site name="s2_05" pos="0.018433   0.0068203    0.011521" size="0.00092166  0.00092166  0.00092166"/>
+     <site name="s2_06" pos="0.018433   0.0068203   -0.011521" size="0.00092166  0.00092166  0.00092166"/>
+				
+				<body name="P3" pos="0.0203 0 0">
+					<joint name="J3" pos="0 0 0" axis="1 0 0" type="ball"   stiffness="0.427" damping="0.02"  />
+					<geom type="mesh" mesh="3" name="3" pos="0 0 0" euler="0 0 0" rgba="0.4 0.9 0.4 1"/>
+					<inertial pos="0.0094 0 0" quat="1 0 0 0" mass="0.008546" diaginertia="0.000083 0.000083 0.00005" />
+					<site name="s3_01" pos="0.0059462   -0.012742           0" size="0.00084946  0.00084946  0.00084946"/>
+     <site name="s3_02" pos="0.0059462   0.0063709    0.011043" size="0.00084946  0.00084946  0.00084946"/>
+     <site name="s3_03" pos="0.0059462   0.0063709   -0.011043" size="0.00084946  0.00084946  0.00084946"/>
+     <site name="s3_04" pos="0.016989   -0.012317           0" size="0.00084946  0.00084946  0.00084946"/>
+     <site name="s3_05" pos="0.016989    0.006286    0.010618" size="0.00084946  0.00084946  0.00084946"/>
+     <site name="s3_06" pos="0.016989    0.006286   -0.010618" size="0.00084946  0.00084946  0.00084946"/>
+					<body name="P4" pos="0.0188 0 0">
+						<joint name="J4" pos="0 0 0" axis="1 0 0" type="ball"   stiffness="0.395" damping="0.02"  />
+						<geom type="mesh" mesh="4" name="4" pos="0 0 0" euler="0 0 0" rgba="0.4 0.9 0.4 1"/>
+						<inertial pos="0.0087 0 0" quat="1 0 0 0" mass="0.00790" diaginertia="0.000083 0.000083 0.00005" />
+						<site name="s4_01" pos="0.0054804   -0.011744           0" size="0.00078291  0.00078291  0.00078291"/>
+     <site name="s4_02" pos="0.0054804   0.0058718    0.010178" size="0.00078291  0.00078291  0.00078291"/>
+     <site name="s4_03" pos="0.0054804   0.0058718   -0.010178" size="0.00078291  0.00078291  0.00078291"/>
+     <site name="s4_04" pos="0.015658   -0.011352           0" size="0.00078291  0.00078291  0.00078291"/>
+     <site name="s4_05" pos="0.015658   0.0057935   0.0097864" size="0.00078291  0.00078291  0.00078291"/>
+     <site name="s4_06" pos="0.015658   0.0057935  -0.0097864" size="0.00078291  0.00078291  0.00078291"/>
+						<body name="P5" pos="0.0174 0 0">
+							<joint name="J5" pos="0 0 0" axis="1 0 0" type="ball"   stiffness="0.365" damping="0.02"  />
+							<geom type="mesh" mesh="5" name="5" pos="0 0 0" euler="0 0 0" rgba="0.4 0.9 0.4 1"/>
+							<inertial pos="0.008 0 0" quat="1 0 0 0" mass="0.00730" diaginertia="0.000083 0.000083 0.00005" />
+							<site name="s5_01" pos="0.005051   -0.010824           0" size="0.00072157  0.00072157  0.00072157"/>
+     <site name="s5_02" pos="0.005051   0.0054118   0.0093805" size="0.00072157  0.00072157  0.00072157"/>
+     <site name="s5_03" pos="0.005051   0.0054118  -0.0093805" size="0.00072157  0.00072157  0.00072157"/>
+     <site name="s5_04" pos="0.014431   -0.010463           0" size="0.00072157  0.00072157  0.00072157"/>
+     <site name="s5_05" pos="0.014431   0.0053396   0.0090197" size="0.00072157  0.00072157  0.00072157"/>
+     <site name="s5_06" pos="0.014431   0.0053396  -0.0090197" size="0.00072157  0.00072157  0.00072157"/>
+							<body name="P6" pos="0.0161 0 0">
+								<joint name="J6" pos="0 0 0" axis="1 0 0" type="ball"   stiffness="0.337" damping="0.02"  />
+								<geom type="mesh" mesh="6" name="6" pos="0 0 0" euler="0 0 0" rgba="0.4 0.9 0.4 1"/>
+								<inertial pos="0.0074 0 0" quat="1 0 0 0" mass="0.00675" diaginertia="0.000083 0.000083 0.00005" />
+								<site name="s6_01" pos="0.0046553  -0.0099757           0" size="0.00066505  0.00066505  0.00066505"/>
+     <site name="s6_02" pos="0.0046553   0.0049878   0.0086456" size="0.00066505  0.00066505  0.00066505"/>
+     <site name="s6_03" pos="0.0046553   0.0049878  -0.0086456" size="0.00066505  0.00066505  0.00066505"/>
+     <site name="s6_04" pos="0.013301  -0.0096432           0" size="0.00066505  0.00066505  0.00066505"/>
+     <site name="s6_05" pos="0.013301   0.0049213   0.0083131" size="0.00066505  0.00066505  0.00066505"/>
+     <site name="s6_06" pos="0.013301   0.0049213  -0.0083131" size="0.00066505  0.00066505  0.00066505"/>
+								<body name="P7" pos="0.0149 0 0">
+									<joint name="J7" pos="0 0 0" axis="1 0 0" type="ball"   stiffness="0.312" damping="0.02"  />
+									<geom type="mesh" mesh="7" name="7" pos="0 0 0" euler="0 0 0" rgba="0.4 0.9 0.4 1"/>
+									<inertial pos="0.0069 0 0" quat="1 0 0 0" mass="0.00624" diaginertia="0.000083 0.000083 0.00005" />
+									<site name="s7_01" pos="0.0042906  -0.0091942           0" size="0.00061295  0.00061295  0.00061295"/>
+     <site name="s7_02" pos="0.0042906   0.0045971   0.0079683" size="0.00061295  0.00061295  0.00061295"/>
+     <site name="s7_03" pos="0.0042906   0.0045971  -0.0079683" size="0.00061295  0.00061295  0.00061295"/>
+     <site name="s7_04" pos="0.012259  -0.0088877           0" size="0.00061295  0.00061295  0.00061295"/>
+     <site name="s7_05" pos="0.012259   0.0045358   0.0076618" size="0.00061295  0.00061295  0.00061295"/>
+     <site name="s7_06" pos="0.012259   0.0045358  -0.0076618" size="0.00061295  0.00061295  0.00061295"/>
+									<body name="P8" pos="0.0137 0 0">
+										<joint name="J8" pos="0 0 0" axis="1 0 0" type="ball"   stiffness="0.288" damping="0.02"  />
+										<geom type="mesh" mesh="8" name="8" pos="0 0 0" euler="0 0 0" rgba="0.4 0.9 0.4 1"/>
+										<inertial pos="0.0063 0 0" quat="1 0 0 0" mass="0.00577" diaginertia="0.000083 0.000083 0.00005" />
+										<site name="s8_01" pos="0.0039545  -0.0084739           0" size="0.00056493  0.00056493  0.00056493"/>
+     <site name="s8_02" pos="0.0039545   0.0042369    0.007344" size="0.00056493  0.00056493  0.00056493"/>
+     <site name="s8_03" pos="0.0039545   0.0042369   -0.007344" size="0.00056493  0.00056493  0.00056493"/>
+     <site name="s8_04" pos="0.011299  -0.0081914           0" size="0.00056493  0.00056493  0.00056493"/>
+     <site name="s8_05" pos="0.011299   0.0041805   0.0070616" size="0.00056493  0.00056493  0.00056493"/>
+     <site name="s8_06" pos="0.011299   0.0041805  -0.0070616" size="0.00056493  0.00056493  0.00056493"/>
+										<body name="P9" pos="0.0127 0 0">
+											<joint name="J9" pos="0 0 0" axis="1 0 0" type="ball"   stiffness="0.266" damping="0.02"  />
+											<geom type="mesh" mesh="9" name="9" pos="0 0 0" euler="0 0 0" rgba="0.4 0.9 0.4 1"/>
+											<inertial pos="0.0059 0 0" quat="1 0 0 0" mass="0.00534" diaginertia="0.000083 0.000083 0.00005" />
+											<site name="s9_01" pos="0.0036447    -0.00781           0" size="0.00052067  0.00052067  0.00052067"/>
+     <site name="s9_02" pos="0.0036447    0.003905   0.0067687" size="0.00052067  0.00052067  0.00052067"/>
+     <site name="s9_03" pos="0.0036447    0.003905  -0.0067687" size="0.00052067  0.00052067  0.00052067"/>
+     <site name="s9_04" pos="0.010413  -0.0075497           0" size="0.00052067  0.00052067  0.00052067"/>
+     <site name="s9_05" pos="0.010413    0.003853   0.0065084" size="0.00052067  0.00052067  0.00052067"/>
+     <site name="s9_06" pos="0.010413    0.003853  -0.0065084" size="0.00052067  0.00052067  0.00052067"/>
+											<body name="P10" pos="0.0117 0 0">
+												<joint name="J10" pos="0 0 0" axis="1 0 0" type="ball"   stiffness="0.246" damping="0.02"  />
+												<geom type="mesh" mesh="10" name="10" pos="0 0 0" euler="0 0 0" rgba="0.4 0.9 0.4 1"/>
+												<inertial pos="0.0054 0 0" quat="1 0 0 0" mass="0.00493" diaginertia="0.000083 0.000083 0.00005" />
+												<site name="s10_01" pos="0.0033592  -0.0071982           0" size="0.00047988  0.00047988  0.00047988"/>
+     <site name="s10_02" pos="0.0033592   0.0035991   0.0062384" size="0.00047988  0.00047988  0.00047988"/>
+     <site name="s10_03" pos="0.0033592   0.0035991  -0.0062384" size="0.00047988  0.00047988  0.00047988"/>
+     <site name="s10_04" pos="0.0095976  -0.0069583           0" size="0.00047988  0.00047988  0.00047988"/>
+     <site name="s10_05" pos="0.0095976   0.0035511   0.0059985" size="0.00047988  0.00047988  0.00047988"/>
+     <site name="s10_06" pos="0.0095976   0.0035511  -0.0059985" size="0.00047988  0.00047988  0.00047988"/>
+												<body name="P11" pos="0.0109 0 0">
+													<joint name="J11" pos="0 0 0" axis="1 0 0" type="ball"   stiffness="0.228" damping="0.02"  />
+													<geom type="mesh" mesh="11" name="11" pos="0 0 0" euler="0 0 0" rgba="0.4 0.9 0.4 1"/>
+													<inertial pos="0.005 0 0" quat="1 0 0 0" mass="0.00456" diaginertia="0.000083 0.000083 0.00005" />
+													<site name="s11_01" pos="0.003096  -0.0066343           0" size="0.00044229  0.00044229  0.00044229"/>
+     <site name="s11_02" pos="0.003096   0.0033171   0.0057497" size="0.00044229  0.00044229  0.00044229"/>
+     <site name="s11_03" pos="0.003096   0.0033171  -0.0057497" size="0.00044229  0.00044229  0.00044229"/>
+     <site name="s11_04" pos="0.0088457  -0.0064131           0" size="0.00044229  0.00044229  0.00044229"/>
+     <site name="s11_05" pos="0.0088457   0.0032729   0.0055286" size="0.00044229  0.00044229  0.00044229"/>
+     <site name="s11_06" pos="0.0088457   0.0032729  -0.0055286" size="0.00044229  0.00044229  0.00044229"/>
+													<body name="P12" pos="0.01 0 0">
+														<joint name="J12" pos="0 0 0" axis="1 0 0" type="ball"   stiffness="0.210" damping="0.02"  />
+														<geom type="mesh" mesh="12" name="12" pos="0 0 0" euler="0 0 0" rgba="0.4 0.9 0.4 1"/>
+														<inertial pos="0.0046 0 0" quat="1 0 0 0" mass="0.00422" diaginertia="0.000083 0.000083 0.00005" />
+														<site name="s12_01" pos="0.0028535  -0.0061145           0" size="0.00040764  0.00040764  0.00040764"/>
+     <site name="s12_02" pos="0.0028535   0.0030573   0.0052993" size="0.00040764  0.00040764  0.00040764"/>
+     <site name="s12_03" pos="0.0028535   0.0030573  -0.0052993" size="0.00040764  0.00040764  0.00040764"/>
+     <site name="s12_04" pos="0.0081527  -0.0059107           0" size="0.00040764  0.00040764  0.00040764"/>
+     <site name="s12_05" pos="0.0081527   0.0030165   0.0050955" size="0.00040764  0.00040764  0.00040764"/>
+     <site name="s12_06" pos="0.0081527   0.0030165  -0.0050955" size="0.00040764  0.00040764  0.00040764"/>
+														<body name="P13" pos="0.0093 0 0">
+															<joint name="J13" pos="0 0 0" axis="1 0 0" type="ball"   stiffness="0.194" damping="0.02"  />
+															<geom type="mesh" mesh="13" name="13" pos="0 0 0" euler="0 0 0" rgba="0.4 0.9 0.4 1"/>
+															<inertial pos="0.0043 0 0" quat="1 0 0 0" mass="0.00390" diaginertia="0.000083 0.000083 0.00005" />
+															<site name="s13_01" pos="0.0026299  -0.0056355           0" size="0.0003757   0.0003757   0.0003757"/>
+     <site name="s13_02" pos="0.0026299   0.0028178   0.0048841" size="0.0003757   0.0003757   0.0003757"/>
+     <site name="s13_03" pos="0.0026299   0.0028178  -0.0048841" size="0.0003757   0.0003757   0.0003757"/>
+     <site name="s13_04" pos="0.007514  -0.0054477           0" size="0.0003757   0.0003757   0.0003757"/>
+     <site name="s13_05" pos="0.007514   0.0027802   0.0046963" size="0.0003757   0.0003757   0.0003757"/>
+     <site name="s13_06" pos="0.007514   0.0027802  -0.0046963" size="0.0003757   0.0003757   0.0003757"/>
+															<body name="P14" pos="0.0086 0 0">
+																<joint name="J14" pos="0 0 0" axis="1 0 0" type="ball"   stiffness="0.180" damping="0.02"  />
+																<geom type="mesh" mesh="14" name="14" pos="0 0 0" euler="0 0 0" rgba="0.4 0.9 0.4 1"/>
+																<inertial pos="0.004 0 0" quat="1 0 0 0" mass="0.00360" diaginertia="0.000083 0.000083 0.00005" />
+																<site name="s14_01" pos="0.0024239   -0.005194           0" size="0.00034627  0.00034627  0.00034627"/>
+     <site name="s14_02" pos="0.0024239    0.002597   0.0045015" size="0.00034627  0.00034627  0.00034627"/>
+     <site name="s14_03" pos="0.0024239    0.002597  -0.0045015" size="0.00034627  0.00034627  0.00034627"/>
+     <site name="s14_04" pos="0.0069254  -0.0050209           0" size="0.00034627  0.00034627  0.00034627"/>
+     <site name="s14_05" pos="0.0069254   0.0025624   0.0043284" size="0.00034627  0.00034627  0.00034627"/>
+     <site name="s14_06" pos="0.0069254   0.0025624  -0.0043284" size="0.00034627  0.00034627  0.00034627"/>
+																<body name="P15" pos="0.0079 0 0">
+																	<joint name="J15" pos="0 0 0" axis="1 0 0" type="ball"   stiffness="0.166" damping="0.02"  />
+																	<geom type="mesh" mesh="15" name="15" pos="0 0 0" euler="0 0 0" rgba="0.4 0.9 0.4 1"/>
+																	<inertial pos="0.0037 0 0" quat="1 0 0 0" mass="0.00333" diaginertia="0.000083 0.000083 0.00005" />
+																	<site name="s15_01" pos="0.002234  -0.0047871           0" size="0.00031914  0.00031914  0.00031914"/>
+     <site name="s15_02" pos="0.002234   0.0023936   0.0041488" size="0.00031914  0.00031914  0.00031914"/>
+     <site name="s15_03" pos="0.002234   0.0023936  -0.0041488" size="0.00031914  0.00031914  0.00031914"/>
+     <site name="s15_04" pos="0.0063828  -0.0046276           0" size="0.00031914  0.00031914  0.00031914"/>
+     <site name="s15_05" pos="0.0063828   0.0023616   0.0039893" size="0.00031914  0.00031914  0.00031914"/>
+     <site name="s15_06" pos="0.0063828   0.0023616  -0.0039893" size="0.00031914  0.00031914  0.00031914"/>
+																	<body name="P16" pos="0.0073 0 0">
+																		<joint name="J16" pos="0 0 0" axis="1 0 0" type="ball"   stiffness="0.153" damping="0.02"  />
+																		<geom type="mesh" mesh="16" name="16" pos="0 0 0" euler="0 0 0" rgba="0.4 0.9 0.4 1"/>
+																		<inertial pos="0.0034 0 0" quat="1 0 0 0" mass="0.00308" diaginertia="0.000083 0.000083 0.00005" />
+																		<site name="s16_01" pos="0.002059  -0.0044121           0" size="0.00029414  0.00029414  0.00029414"/>
+     <site name="s16_02" pos="0.002059    0.002206   0.0038238" size="0.00029414  0.00029414  0.00029414"/>
+     <site name="s16_03" pos="0.002059    0.002206  -0.0038238" size="0.00029414  0.00029414  0.00029414"/>
+     <site name="s16_04" pos="0.0058828   -0.004265           0" size="0.00029414  0.00029414  0.00029414"/>
+     <site name="s16_05" pos="0.0058828   0.0021766   0.0036767" size="0.00029414  0.00029414  0.00029414"/>
+     <site name="s16_06" pos="0.0058828   0.0021766  -0.0036767" size="0.00029414  0.00029414  0.00029414"/>
+																		<body name="P17" pos="0.0068 0 0">
+																			<joint name="J17" pos="0 0 0" axis="1 0 0" type="ball"   stiffness="0.142" damping="0.02"  />
+																			<geom type="mesh" mesh="17" name="17" pos="0 0 0" euler="0 0 0" rgba="0.4 0.9 0.4 1"/>
+																			<inertial pos="0.0031 0 0" quat="1 0 0 0" mass="0.00285" diaginertia="0.000083 0.000083 0.00005" />
+																			<site name="s17_01" pos="0.0018977  -0.0040665           0" size="0.0002711   0.0002711   0.0002711"/>
+     <site name="s17_02" pos="0.0018977   0.0020332   0.0035243" size="0.0002711   0.0002711   0.0002711"/>
+     <site name="s17_03" pos="0.0018977   0.0020332  -0.0035243" size="0.0002711   0.0002711   0.0002711"/>
+     <site name="s17_04" pos="0.0054219  -0.0039309           0" size="0.0002711   0.0002711   0.0002711"/>
+     <site name="s17_05" pos="0.0054219   0.0020061   0.0033887" size="0.0002711   0.0002711   0.0002711"/>
+     <site name="s17_06" pos="0.0054219   0.0020061  -0.0033887" size="0.0002711   0.0002711   0.0002711"/>
+																			<body name="P18" pos="0.0063 0 0">
+																				<joint name="J18" pos="0 0 0" axis="1 0 0" type="ball"   stiffness="0.131" damping="0.02"  />
+																				<geom type="mesh" mesh="18" name="18" pos="0 0 0" euler="0 0 0" rgba="0.4 0.9 0.4 1"/>
+																				<inertial pos="0.0029 0 0" quat="1 0 0 0" mass="0.00263" diaginertia="0.000083 0.000083 0.00005" />
+																				<site name="s18_01" pos="0.001749  -0.0037479           0" size="0.00024986  0.00024986  0.00024986"/>
+     <site name="s18_02" pos="0.001749   0.0018739   0.0032482" size="0.00024986  0.00024986  0.00024986"/>
+     <site name="s18_03" pos="0.001749   0.0018739  -0.0032482" size="0.00024986  0.00024986  0.00024986"/>
+     <site name="s18_04" pos="0.0049972   -0.003623           0" size="0.00024986  0.00024986  0.00024986"/>
+     <site name="s18_05" pos="0.0049972    0.001849   0.0031232" size="0.00024986  0.00024986  0.00024986"/>
+     <site name="s18_06" pos="0.0049972    0.001849  -0.0031232" size="0.00024986  0.00024986  0.00024986"/>
+																				<body name="P19" pos="0.0058 0 0">
+																					<joint name="J19" pos="0 0 0" axis="1 0 0" type="ball"   stiffness="0.121" damping="0.02"  />
+																					<geom type="mesh" mesh="19" name="19" pos="0 0 0" euler="0 0 0" rgba="0.4 0.9 0.4 1"/>
+																					<inertial pos="0.0027 0 0" quat="1 0 0 0" mass="0.00243" diaginertia="0.000083 0.000083 0.00005" />
+																					<site name="s19_01" pos="0.001612  -0.0034543           0" size="0.00023028  0.00023028  0.00023028"/>
+     <site name="s19_02" pos="0.001612   0.0017271   0.0029937" size="0.00023028  0.00023028  0.00023028"/>
+     <site name="s19_03" pos="0.001612   0.0017271  -0.0029937" size="0.00023028  0.00023028  0.00023028"/>
+     <site name="s19_04" pos="0.0046057  -0.0033391           0" size="0.00023028  0.00023028  0.00023028"/>
+     <site name="s19_05" pos="0.0046057   0.0017041   0.0028786" size="0.00023028  0.00023028  0.00023028"/>
+     <site name="s19_06" pos="0.0046057   0.0017041  -0.0028786" size="0.00023028  0.00023028  0.00023028"/>
+																					<body name="P20" pos="0.0054 0 0">
+																						<joint name="J20" pos="0 0 0" axis="1 0 0" type="ball"   stiffness="0.112" damping="0.02"  />
+																						<geom type="mesh" mesh="20" name="20" pos="0 0 0" euler="0 0 0" rgba="0.4 0.9 0.4 1"/>
+																						<inertial pos="0.0025 0 0" quat="1 0 0 0" mass="0.00225" diaginertia="0.000083 0.000083 0.00005" />
+																						<site name="s20_01" pos="0.0014857  -0.0031837           0" size="0.00021224  0.00021224  0.00021224"/>
+     <site name="s20_02" pos="0.0014857   0.0015918   0.0027592" size="0.00021224  0.00021224  0.00021224"/>
+     <site name="s20_03" pos="0.0014857   0.0015918  -0.0027592" size="0.00021224  0.00021224  0.00021224"/>
+     <site name="s20_04" pos="0.0042449  -0.0030775           0" size="0.00021224  0.00021224  0.00021224"/>
+     <site name="s20_05" pos="0.0042449   0.0015706    0.002653" size="0.00021224  0.00021224  0.00021224"/>
+     <site name="s20_06" pos="0.0042449   0.0015706   -0.002653" size="0.00021224  0.00021224  0.00021224"/>
+																					</body>
+																				</body>
+																			</body>
+																		</body>
+																	</body>
+																</body>
+															</body>
+														</body>
+													</body>
+												</body>
+											</body>
+										</body>
+									</body>
+								</body>
+							</body>
+						</body>
+					</body>
+				</body>
+			</body>
+		</body>
+        
+    </worldbody>
+	
+<tendon>
+	<spatial name="t1" width="0.0004" rgba=".95 .3 .3 1" limited="true" frictionloss="0.1" range="0 0.33">
+		<site site="s1_01"/>
+		<site site="s1_04"/>
+		<site site="s2_01"/>
+		<site site="s2_04"/>
+		<site site="s3_01"/>
+		<site site="s3_04"/>
+		<site site="s4_01"/>
+		<site site="s4_04"/>
+		<site site="s5_01"/>
+		<site site="s5_04"/>
+		<site site="s6_01"/>
+		<site site="s6_04"/>
+		<site site="s7_01"/>
+		<site site="s7_04"/>
+		<site site="s8_01"/>
+		<site site="s8_04"/>
+		<site site="s9_01"/>
+		<site site="s9_04"/>
+		<site site="s10_01"/>
+		<site site="s10_04"/>
+		<site site="s11_01"/>
+		<site site="s11_04"/>
+		<site site="s12_01"/>
+		<site site="s12_04"/>
+		<site site="s13_01"/>
+		<site site="s13_04"/>
+		<site site="s14_01"/>
+		<site site="s14_04"/>
+		<site site="s15_01"/>
+		<site site="s15_04"/>
+		<site site="s16_01"/>
+		<site site="s16_04"/>
+		<site site="s17_01"/>
+		<site site="s17_04"/>
+		<site site="s18_01"/>
+		<site site="s18_04"/>
+		<site site="s19_01"/>
+		<site site="s19_04"/>
+		<site site="s20_01"/>
+		<site site="s20_04"/>
+		
+	</spatial>
+	
+	<spatial name="t2" width="0.0004" rgba=".95 .3 .3 1" limited="true" frictionloss="0.1" range="0 0.33">
+		<site site="s1_02"/>
+		<site site="s1_05"/>
+		<site site="s2_02"/>
+		<site site="s2_05"/>
+		<site site="s3_02"/>
+		<site site="s3_05"/>
+		<site site="s4_02"/>
+		<site site="s4_05"/>
+		<site site="s5_02"/>
+		<site site="s5_05"/>
+		<site site="s6_02"/>
+		<site site="s6_05"/>
+		<site site="s7_02"/>
+		<site site="s7_05"/>
+		<site site="s8_02"/>
+		<site site="s8_05"/>
+		<site site="s9_02"/>
+		<site site="s9_05"/>
+		<site site="s10_02"/>
+		<site site="s10_05"/>
+		<site site="s11_02"/>
+		<site site="s11_05"/>
+		<site site="s12_02"/>
+		<site site="s12_05"/>
+		<site site="s13_02"/>
+		<site site="s13_05"/>
+		<site site="s14_02"/>
+		<site site="s14_05"/>
+		<site site="s15_02"/>
+		<site site="s15_05"/>
+		<site site="s16_02"/>
+		<site site="s16_05"/>
+		<site site="s17_02"/>
+		<site site="s17_05"/>
+		<site site="s18_02"/>
+		<site site="s18_05"/>
+		<site site="s19_02"/>
+		<site site="s19_05"/>
+		<site site="s20_02"/>
+		<site site="s20_05"/>
+		
+	</spatial>
+	
+	<spatial name="t3" width="0.0004" rgba=".95 .3 .3 1" limited="true" frictionloss="0.1" range="0 0.33">
+		<site site="s1_03"/>
+		<site site="s1_06"/>
+		<site site="s2_03"/>
+		<site site="s2_06"/>
+		<site site="s3_03"/>
+		<site site="s3_06"/>
+		<site site="s4_03"/>
+		<site site="s4_06"/>
+		<site site="s5_03"/>
+		<site site="s5_06"/>
+		<site site="s6_03"/>
+		<site site="s6_06"/>
+		<site site="s7_03"/>
+		<site site="s7_06"/>
+		<site site="s8_03"/>
+		<site site="s8_06"/>
+		<site site="s9_03"/>
+		<site site="s9_06"/>
+		<site site="s10_03"/>
+		<site site="s10_06"/>
+		<site site="s11_03"/>
+		<site site="s11_06"/>
+		<site site="s12_03"/>
+		<site site="s12_06"/>
+		<site site="s13_03"/>
+		<site site="s13_06"/>
+		<site site="s14_03"/>
+		<site site="s14_06"/>
+		<site site="s15_03"/>
+		<site site="s15_06"/>
+		<site site="s16_03"/>
+		<site site="s16_06"/>
+		<site site="s17_03"/>
+		<site site="s17_06"/>
+		<site site="s18_03"/>
+		<site site="s18_06"/>
+		<site site="s19_03"/>
+		<site site="s19_06"/>
+		<site site="s20_03"/>
+		<site site="s20_06"/>
+		
+	</spatial>
+</tendon>
+	
+	
+	<equality>
+		<weld body1="mocapt" body2="P1" solref="0.01 1" solimp=".9 .9 0.01"/>	
+		
+    </equality>
+    <sensor>
+        
+    </sensor>
+</mujoco>
